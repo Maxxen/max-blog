@@ -1,12 +1,12 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
-import           Hakyll
-
+import Data.Monoid (mappend)
+import Hakyll
+import Data.List (intercalate)
 
 --------------------------------------------------------------------------------
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith config $ do
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
@@ -65,4 +65,29 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     defaultContext
+
+--------------------------------------------------------------------------------
+
+config :: Configuration
+config = defaultConfiguration
+  { destinationDirectory = "_site"
+  , previewPort = 8000
+  , deployCommand = deployCommand'
+  }
+  where
+    deployCommand' = intercalate "\n"
+      [ "git stash"
+      , "git checkout develop"
+      , "stack exec blog clean"
+      , "stack exec blog build"
+      , "git fetch --all"
+      , "git checkout -b master --track origin/master"
+      , "cp -a _site/. ."
+      , "git add -A"
+      , "git commit -m 'publish'"
+      , "git push origin master:master"
+      , "git checkout develop"
+      , "git branch -D master"
+      , "git stash pop"
+      ]
 
