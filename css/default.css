@@ -18,11 +18,11 @@
 }
 
 hr.stripe {
-    	height: 2em;
-      border: 0;
+    height: 2em;
+    border: 0;
 }
 
-a {
+#main a, #footer a {
     text-decoration: none;
     border-bottom: 5px solid var(--color-accent);
     color: var(--color-primary);
@@ -30,11 +30,11 @@ a {
 
 
 body {
+    max-width: 70rem;
     color: black;
     font-size: 16px;
     font-family: var(--font-mono);
     margin: 0px auto 0px auto;
-    width: 600px;
 }
 
 div#header {
@@ -42,33 +42,12 @@ div#header {
 }
 
 div#logo a {
+
     color: black;
     float: left;
     font-size: 18px;
     font-weight: bold;
     text-decoration: none;
-}
-
-div#header #navigation {
-    text-align: right;
-}
-
-div#header #navigation a {
-    color: black;
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: 12px;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-
-div#footer {
-    border-top: solid 2px black;
-    color: #555;
-    font-size: 12px;
-    margin-top: 30px;
-    padding: 12px 0px 12px 0px;
-    text-align: right;
 }
 
 h1 {
@@ -83,4 +62,90 @@ div.info {
     color: #555;
     font-size: 14px;
     font-style: italic;
+}
+
+
+
+
+
+
+
+
+---OLD
+
+
+#container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#header {
+    grid-column: span 3;
+    background-color: var(--main-accent);
+}
+
+#menu {
+    background: var(--main-primary);
+    color: var(--main-accent);
+}
+
+#navigation {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1em;
+}
+
+.nav-item {
+    margin: 0 1em 0 1em;
+    flex: 1;
+    font-weight: bold;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+}
+
+.nav-item:after{
+    content: "»";
+    margin-right: 1em;
+    float:right;
+}
+
+a.nav-item {
+    text-decoration: none;
+    color: var(--main-accent);
+}
+
+
+#main {
+    flex: 1;
+}
+
+#content {
+    margin: 0px auto 0px auto;
+    max-width: 70rem;
+}
+
+#footer {
+    grid-column: span 3;
+    
+    background: var(--main-primary);
+    color: var(--main-accent);
+    
+    font-size: 12px;
+    padding: 12px 0px 12px 0px;
+    text-align: right;
+}
+
+
+@media only screen and (min-width: 768px) {
+    #container {
+        display: grid;
+        grid-template-columns: 12rem 1fr 12rem;
+        grid-template-rows: auto 1fr auto;
+        height: 100vh;
+    }
+
+    #navigation {
+        flex-direction: column;
+    }
 }
