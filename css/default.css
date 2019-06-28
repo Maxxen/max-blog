@@ -1,13 +1,43 @@
+:root {
+    --color-accent: #91fb28;
+    --color-primary: #0b4747;
+    --color-bg: #ffffff;
+    --color-border: #d7d2cd;
+    --font-mono: Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif
+    
+}
+
+.stripe {
+    background: repeating-linear-gradient(
+        45deg,
+        var(--color-primary),
+        var(--color-primary) 10px,
+        var(--color-bg) 10px,
+        var(--color-bg) 20px
+    );
+}
+
+hr.stripe {
+    	height: 2em;
+      border: 0;
+}
+
+a {
+    text-decoration: none;
+    border-bottom: 5px solid var(--color-accent);
+    color: var(--color-primary);
+}
+
+
 body {
     color: black;
     font-size: 16px;
+    font-family: var(--font-mono);
     margin: 0px auto 0px auto;
     width: 600px;
 }
 
 div#header {
-    border-bottom: 2px solid black;
-    margin-bottom: 30px;
     padding: 12px 0px 12px 0px;
 }
 
