@@ -3,8 +3,9 @@
     --color-primary: #0b4747;
     --color-bg: #ffffff;
     --color-border: #d7d2cd;
+    --font-main: "Source Sans Pro",Helvetica,Arial,sans-serif;
     --font-mono: Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif
-    
+                                                                                                                                 
 }
 
 .stripe {
@@ -18,11 +19,14 @@
 }
 
 hr.stripe {
-    height: 2em;
+    height: 1em;
     border: 0;
+    margin: 0;
 }
 
-#main a, #footer a {
+
+
+main a {
     text-decoration: none;
     border-bottom: 5px solid var(--color-accent);
     color: var(--color-primary);
@@ -30,122 +34,132 @@ hr.stripe {
 
 
 body {
-    max-width: 70rem;
     color: black;
     font-size: 16px;
-    font-family: var(--font-mono);
+    font-family: var(--font-main);
     margin: 0px auto 0px auto;
-}
-
-div#header {
-    padding: 12px 0px 12px 0px;
-}
-
-div#logo a {
-
-    color: black;
-    float: left;
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
 }
 
 h1 {
-    font-size: 24px;
+    margin: 0px;
 }
 
 h2 {
-    font-size: 20px;
+    margin: 0px;
 }
 
-div.info {
-    color: #555;
-    font-size: 14px;
-    font-style: italic;
+/* BEGIN TOPNAV */
+
+/* Add a black background color to the top navigation */
+.menu {
+    overflow: hidden;
 }
 
-
-
-
-
-
-
-
----OLD
-
-
-#container {
-    display: flex;
-    flex-direction: column;
-}
-
-
-#header {
-    grid-column: span 3;
-    background-color: var(--main-accent);
-}
-
-#menu {
-    background: var(--main-primary);
-    color: var(--main-accent);
-}
-
-#navigation {
-    display: flex;
-    flex-direction: row;
-    margin-top: 1em;
-}
-
-.nav-item {
-    margin: 0 1em 0 1em;
-    flex: 1;
-    font-weight: bold;
-    box-sizing: border-box;
-    border-bottom: 1px solid black;
-}
-
-.nav-item:after{
-    content: "»";
-    margin-right: 1em;
-    float:right;
-}
-
-a.nav-item {
+/* Style the links inside the navigation bar */
+.menu a {
+    float: right;
+    display: block;
+    color: var(--color-primary);
+    text-align: center;
     text-decoration: none;
-    color: var(--main-accent);
+    font-size: 24px;
+    
+    font-weight: bold;
 }
+
+.menu a:first-child {
+    float: left;
+}
+
+.menu a:not(:last-child) {
+    margin-right: 1em;
+}
+
+/* Change the color of links on hover */
+.menu a:hover {
+    color: black;
+}
+
+/* Add an active class to highlight the current page */
+.menu a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.menu .icon {
+    display: none;
+    border: none;
+}
+
+.padbox {
+    padding: 4% 23%;
+}
+
+.padbox-horizontal {
+    padding: 0px 23%;
+}
+
+/* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+@media screen and (max-width: 768px) {
+    .menu a:not(:first-child) {display: none;}
+
+    .menu a.icon {
+        float: right;
+        display: block;
+    }
+
+    .menu.responsive {position: relative;}
+    .menu.responsive a.icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .menu.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+        border-bottom: 1px solid black;
+        box-sizing: border-box;
+    }
+    
+    .menu.responsive a:not(:first-child):not(:last-child):after{
+        content: "»";
+        margin-right: 1em;
+        float:right;
+    }
+
+
+    .padbox {
+        padding: 4%;
+    }
+
+    .padbox-horizontal {
+        padding: 0px 4%;
+    }
+}
+/* END TOPNAV*/
+
+
 
 
 #main {
-    flex: 1;
+    
 }
 
 #content {
-    margin: 0px auto 0px auto;
-    max-width: 70rem;
+    
 }
 
 #footer {
-    grid-column: span 3;
-    
-    background: var(--main-primary);
-    color: var(--main-accent);
-    
     font-size: 12px;
-    padding: 12px 0px 12px 0px;
-    text-align: right;
+    text-align: center;
+    color: var(--color-accent);
+    background-color: var(--color-primary);
+}
+
+#details {
+
 }
 
 
-@media only screen and (min-width: 768px) {
-    #container {
-        display: grid;
-        grid-template-columns: 12rem 1fr 12rem;
-        grid-template-rows: auto 1fr auto;
-        height: 100vh;
-    }
-
-    #navigation {
-        flex-direction: column;
-    }
-}

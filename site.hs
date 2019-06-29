@@ -7,7 +7,7 @@ import Data.List (intercalate)
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyllWith config $ do
-    match "images/*" $ do
+    match ("images/*" .||. "js/*") $ do
         route   idRoute
         compile copyFileCompiler
 
