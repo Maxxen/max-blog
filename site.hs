@@ -18,30 +18,24 @@ main = hakyllWith config $ do
     match (fromList ["about.rst", "contact.markdown"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" standardCtx
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" standardCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
-
-    match "posts/*" $ version "raw" $ do
-      route $ setExtension "html"
-      compile $ pandocCompiler
-        >>= loadAndApplyTemplate "templates/post.html" postCtx
-        >>= relativizeUrls
-        
-
 
     create ["archive.html"] $ do
         route idRoute
         compile $ do
+            posts <- recentFirst =<< loadAll "posts/*"
             let archiveCtx =
+                    listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Archives"            `mappend`
-                    standardCtx
+                    defaultContext
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
@@ -52,12 +46,14 @@ main = hakyllWith config $ do
     match "index.html" $ do
         route idRoute
         compile $ do
+            posts <- recentFirst =<< loadAll "posts/*"
             let indexCtx =
+                    listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Home"                `mappend`
-                    standardCtx
+                    defaultContext
 
             getResourceBody
-                -- >>= applyAsTemplate indexCtx
+                >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
 
@@ -65,14 +61,6 @@ main = hakyllWith config $ do
 
 
 --------------------------------------------------------------------------------
-standardCtx :: Context String
-standardCtx =
-  let
-    postTitles = recentFirst  =<< loadAll ("posts/*" .&&. hasVersion "raw")
-  in
-    listField "postTitles" postCtx postTitles `mappend`
-    defaultContext
-
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
