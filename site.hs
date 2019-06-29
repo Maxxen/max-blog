@@ -18,7 +18,7 @@ main = hakyllWith config $ do
     match (fromList ["about.rst", "contact.markdown"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= loadAndApplyTemplate "templates/default.html" standardCtx
             >>= relativizeUrls
 
     match "posts/*" $ do
@@ -35,7 +35,7 @@ main = hakyllWith config $ do
             let archiveCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Archives"            `mappend`
-                    defaultContext
+                    standardCtx
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
@@ -50,7 +50,7 @@ main = hakyllWith config $ do
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Home"                `mappend`
-                    defaultContext
+                    standardCtx
 
             getResourceBody
                 >>= applyAsTemplate indexCtx
@@ -64,7 +64,16 @@ main = hakyllWith config $ do
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
-    defaultContext
+    standardCtx
+
+
+standardCtx :: Context String
+standardCtx = defaultContext
+
+scriptCtx :: Context String
+scriptCtx = Context f
+  where
+    f "src" [] item = return $ StringField (itemBody item)
 
 --------------------------------------------------------------------------------
 

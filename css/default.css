@@ -90,6 +90,8 @@ h2 {
 .menu .icon {
     display: none;
     border: none;
+    width: 2em;
+    text-align: center;
 }
 
 .padbox {
@@ -109,11 +111,15 @@ h2 {
         display: block;
     }
 
-    .menu.responsive {position: relative;}
+    .menu.responsive {
+        position: relative;
+    }
     .menu.responsive a.icon {
         position: absolute;
         right: 0;
         top: 0;
+        width: 2em;
+        text-align: center;
     }
     .menu.responsive a {
         float: none;
@@ -121,12 +127,14 @@ h2 {
         text-align: left;
         border-bottom: 1px solid black;
         box-sizing: border-box;
+        margin-right: 0px;
     }
     
     .menu.responsive a:not(:first-child):not(:last-child):after{
         content: "»";
-        margin-right: 1em;
         float:right;
+        width: 2em;
+        text-align: center;
     }
 
 
