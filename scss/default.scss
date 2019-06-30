@@ -4,9 +4,19 @@ $color-accent: #91fb28;
 $color-primary: #0b4747;
 $color-bg: #ffffff;
 $color-border: #d7d2cd;
+$color-code: rgba(27,31,35,.05);
 $font-main: "Source Sans Pro",Helvetica,Arial,sans-serif;
 $font-mon: Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
 
+@function stripe-gradient($color1, $color2) {
+    @return repeating-linear-gradient(
+        45deg,
+        $color1,
+        $color1 10px,
+        $color2 10px,
+        $color2 20px);
+    
+}
 @mixin stripe($color1, $color2) {
     background: repeating-linear-gradient(
         45deg,
@@ -28,8 +38,13 @@ $font-mon: Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstrea
 
 main a {
     text-decoration: none;
-    border-bottom: 5px solid $color-accent;
+    border-bottom: 3px solid $color-primary;
     color: $color-primary;
+}
+
+main a:hover {
+    color: black;
+    border-color: black;
 }
 
 
@@ -181,7 +196,20 @@ body {
     }
 
     .post-body {
-        
+        blockquote {
+            margin: 1em 0px;
+            padding: 0px 1em;
+            border-left: 5px solid $color-primary;
+        }
+
+        pre {
+            padding: 1em;
+            background-color: $color-code;
+            overflow: auto;
+        }
+        code {
+            overflow: auto;
+        }
     }
 }
 
