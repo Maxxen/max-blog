@@ -11,9 +11,17 @@ main = hakyllWith config $ do
         route   idRoute
         compile copyFileCompiler
 
+
+
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
+
+
+    match "scss/*" $ do
+      route $ gsubRoute "scss/" (const "css/") `composeRoutes` setExtension "css"
+      compile compressScssCompiler
+
 
     match (fromList ["about.rst", "contact.markdown"]) $ do
         route   $ setExtension "html"
@@ -21,12 +29,14 @@ main = hakyllWith config $ do
             >>= loadAndApplyTemplate "templates/default.html" standardCtx
             >>= relativizeUrls
 
+
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
+
 
     create ["archive.html"] $ do
         route idRoute
@@ -59,6 +69,19 @@ main = hakyllWith config $ do
 
     match "templates/*" $ compile templateCompiler
 
+--------------------------------------------------------------------------------
+
+{- Thanks to: https://codetalk.io/posts/2016-05-10-compiling-scss-and-js-in-hakyll.html -}
+compressScssCompiler :: Compiler (Item String)
+compressScssCompiler = do
+  fmap (fmap compressCss) $
+    getResourceString
+    >>= withItemBody (unixFilter "sass" [ "-s"
+                                        , "--scss"
+                                        , "--compass"
+                                        , "--style", "compressed"
+                                        , "--load-path", "scss"
+                                        ])
 
 --------------------------------------------------------------------------------
 postCtx :: Context String
@@ -69,11 +92,6 @@ postCtx =
 
 standardCtx :: Context String
 standardCtx = defaultContext
-
-scriptCtx :: Context String
-scriptCtx = Context f
-  where
-    f "src" [] item = return $ StringField (itemBody item)
 
 --------------------------------------------------------------------------------
 
